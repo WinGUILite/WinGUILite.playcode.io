@@ -4,62 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WinGUILite - Simple Package Management for Windows</title>
-    <style>
-        :root {
-            --primary-color: #2563eb;
-            --secondary-color: #1e40af;
-            --text-color: #1f2937;
-            --light-bg: #f3f4f6;
-        }
-
-        /* Previous styles remain the same */
-        /* Adding navigation styles */
-        .nav {
-            background-color: white;
-            padding: 1rem 2rem;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--primary-color);
-            text-decoration: none;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            color: var(--text-color);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary-color);
-        }
-
-        .nav-links a.active {
-            color: var(--primary-color);
-        }
-
-        /* Previous styles remain unchanged */
-    </style>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <meta name="description" content="WinGUILite - A lightweight, user-friendly GUI for Microsoft WinGet. Simplify your Windows package management experience.">
+    <meta name="author" content="JimmyPla6z">
+    <meta name="keywords" content="WinGUILite, WinGet, Windows Package Manager, GUI, Package Management">
 </head>
 <body>
     <nav class="nav">
@@ -72,6 +21,46 @@
         </div>
     </nav>
 
-    <!-- Rest of the index.html content remains the same -->
+    <section class="hero">
+        <h1>WinGUILite</h1>
+        <p>A lightweight, user-friendly GUI for Microsoft WinGet. Simplify your Windows package management experience.</p>
+        <div class="cta-buttons">
+            <a href="download.html" class="cta-button">Download Now</a>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3>Two Editions Available</h3>
+                <p>Choose between PyQt5 for a modern look or Tkinter for a lightweight experience. Both editions offer the same core functionality.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Simple Interface</h3>
+                <p>Clean and intuitive graphical interface that makes package management accessible to everyone.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Efficient Management</h3>
+                <p>Install, update, and remove packages with just a few clicks. No command line knowledge required.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Lightweight Design</h3>
+                <p>Built with performance in mind, ensuring a smooth experience without unnecessary bloat.</p>
+            </div>
+            <div class="feature-card">
+                <h3>WinGet Integration</h3>
+                <p>Seamlessly integrates with Microsoft's official package manager for Windows.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Open Source</h3>
+                <p>Free and open source software. Contribute, customize, and make it your own.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Created by <a href="https://github.com/JimmyPla6z">JimmyPla6z</a> | <a href="https://github.com/WinGUILite/winguilite.playcode.io">GitHub Repository</a></p>
+        <p>Last updated: 2025-07-08</p>
+    </footer>
 </body>
 </html>
