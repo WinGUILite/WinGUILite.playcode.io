@@ -4,8 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Download WinGUILite - Simple Package Management for Windows</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <meta name="description" content="Download WinGUILite - Choose between PyQt5 and Tkinter editions for your Windows package management needs.">
+    <meta name="author" content="JimmyPla6z">
     <style>
-        /* Previous styles remain the same */
+        /* Download page specific styles */
+        .download-section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
         .edition-title {
             text-align: center;
             margin: 2rem 0;
@@ -54,11 +64,6 @@
             padding: 1rem;
         }
 
-        .download-button:disabled {
-            background-color: #9ca3af;
-            cursor: not-allowed;
-        }
-
         .version-info {
             font-size: 0.9rem;
             color: #666;
@@ -69,6 +74,47 @@
             font-size: 0.875rem;
             color: #666;
             margin-top: 0.5rem;
+        }
+
+        .system-requirements {
+            background-color: var(--light-bg);
+            padding: 4rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .requirements-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .requirements-container h3 {
+            color: var(--primary-color);
+            margin: 1.5rem 0 1rem;
+        }
+
+        .requirements-container ul {
+            list-style-type: none;
+            padding-left: 1rem;
+        }
+
+        .requirements-container li {
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+
+        .requirements-container li::before {
+            content: "•";
+            color: var(--primary-color);
+            font-weight: bold;
+            position: absolute;
+            left: -1rem;
+        }
+
+        .last-updated {
+            text-align: center;
+            font-size: 0.875rem;
+            color: #666;
+            margin-top: 2rem;
         }
     </style>
 </head>
@@ -123,6 +169,7 @@
                 <li>1 GB RAM (2 GB recommended)</li>
             </ul>
         </div>
+        <p class="last-updated">Last updated: 2025-07-08 21:45:19 UTC</p>
     </section>
 
     <footer>
@@ -130,6 +177,7 @@
     </footer>
 
     <script>
+        // Previous JavaScript code remains the same
         async function fetchReleases(edition) {
             const repo = edition === 'pyqt5' ? 'winguilite-pyqt5' : 'winguilite-tkinter';
             const url = `https://api.github.com/repos/WinGUILite/${repo}/releases/latest`;
