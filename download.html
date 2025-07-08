@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download WinGUILite - Simple Package Management for Windows</title>
+    <style>
+        /* Previous styles remain the same */
+        .edition-title {
+            text-align: center;
+            margin: 2rem 0;
+            color: var(--primary-color);
+        }
+
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .download-card {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .download-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .edition-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-color);
+        }
+
+        .error-message {
+            color: #dc2626;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .download-button:disabled {
+            background-color: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .version-info {
+            font-size: 0.9rem;
+            color: #666;
+            margin: 1rem 0;
+        }
+
+        .file-size {
+            font-size: 0.875rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">WinGUILite</a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="download.html" class="active">Download</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="download-section">
+        <h1>Download WinGUILite</h1>
+        <p>Choose your preferred edition and version.</p>
+
+        <!-- PyQt5 Edition -->
+        <h2 class="edition-title">PyQt5 Edition</h2>
+        <div class="download-grid" id="pyqt5-downloads">
+            <div class="loading">Loading PyQt5 Edition releases...</div>
+        </div>
+
+        <!-- Tkinter Edition -->
+        <h2 class="edition-title">Tkinter Edition</h2>
+        <div class="download-grid" id="tkinter-downloads">
+            <div class="loading">Loading Tkinter Edition releases...</div>
+        </div>
+    </section>
+
+    <section class="system-requirements">
+        <div class="requirements-container">
+            <h2>System Requirements</h2>
+            <h3>PyQt5 Edition</h3>
+            <ul>
+                <li>Windows 10 or later</li>
+                <li>Microsoft WinGet package manager installed</li>
+                <li>Python 3.8 or later</li>
+                <li>PyQt5</li>
+                <li>500 MB free disk space</li>
+                <li>2 GB RAM (4 GB recommended)</li>
+            </ul>
+
+            <h3>Tkinter Edition</h3>
+            <ul>
+                <li>Windows 10 or later</li>
+                <li>Microsoft WinGet package manager installed</li>
+                <li>Python 3.8 or later</li>
+                <li>Tkinter (included with Python)</li>
+                <li>400 MB free disk space</li>
+                <li>1 GB RAM (2 GB recommended)</li>
+            </ul>
+        </div>
+    </section>
+
+    <footer>
+        <p>Created by <a href="https://github.com/JimmyPla6z">JimmyPla6z</a> | <a href="https://github.com/WinGUILite/winguilite.playcode.io">GitHub Repository</a></p>
+    </footer>
+
+    <script>
+        async function fetchReleases(edition) {
+            const repo = edition === 'pyqt5' ? 'winguilite-pyqt5' : 'winguilite-tkinter';
+            const url = `https://api.github.com/repos/WinGUILite/${repo}/releases/latest`;
+            
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error('Failed to fetch releases');
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error(`Error fetching ${edition} releases:`, error);
+                return null;
+            }
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function createDownloadCard(asset, edition, isPortable) {
+            const card = document.createElement('div');
+            card.className = 'download-card';
+            
+            const type = isPortable ? 'Portable Version' : 'Installer';
+            const editionName = edition === 'pyqt5' ? 'PyQt5' : 'Tkinter';
+            
+            card.innerHTML = `
+                <span class="edition-badge">${editionName}</span>
+                <h2>${type}</h2>
+                <p>${isPortable ? 'No installation required' : 'Recommended for most users'}</p>
+                <div class="version-info">
+                    <p>Version: ${asset.tag_name || 'v1.0.0'}</p>
+                    <p>Released: ${new Date(asset.published_at).toLocaleDateString()}</p>
+                </div>
+                <p class="file-size">Size: ${formatFileSize(asset.size)}</p>
+                <a href="${asset.browser_download_url}" class="download-button">Download ${type}</a>
+            `;
+            
+            return card;
+        }
+
+        async function populateDownloads() {
+            const editions = ['pyqt5', 'tkinter'];
+            
+            for (const edition of editions) {
+                const containerId = `${edition}-downloads`;
+                const container = document.getElementById(containerId);
+                
+                try {
+                    const release = await fetchReleases(edition);
+                    
+                    if (release) {
+                        container.innerHTML = ''; // Clear loading message
+                        
+                        // Filter assets for installer and portable versions
+                        const installer = release.assets.find(a => a.name.includes('installer'));
+                        const portable = release.assets.find(a => a.name.includes('portable'));
+                        
+                        if (installer) container.appendChild(createDownloadCard(installer, edition, false));
+                        if (portable) container.appendChild(createDownloadCard(portable, edition, true));
+                        
+                        if (!installer && !portable) {
+                            container.innerHTML = `<div class="error-message">No downloads available for ${edition} edition.</div>`;
+                        }
+                    } else {
+                        container.innerHTML = `<div class="error-message">Failed to load ${edition} edition releases.</div>`;
+                    }
+                } catch (error) {
+                    container.innerHTML = `<div class="error-message">Error loading ${edition} edition releases.</div>`;
+                }
+            }
+        }
+
+        // Initialize downloads when the page loads
+        document.addEventListener('DOMContentLoaded', populateDownloads);
+    </script>
+</body>
+</html>
