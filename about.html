@@ -53,8 +53,8 @@
     <script>
         async function fetchTeam() {
             const owner = 'WinGUILite';
-            const repo = 'WinGUILite'; // Updated to use the main repository
-            const repoId = '969747312'; // Added repository ID for verification
+            const repo = 'WinGUILite';
+            const repoId = '969747312';
             
             try {
                 // Create a default contributor for JimmyPla6z since we know they're the main contributor
@@ -62,7 +62,7 @@
                     login: 'JimmyPla6z',
                     html_url: 'https://github.com/JimmyPla6z',
                     avatar_url: 'https://avatars.githubusercontent.com/u/187200688?v=4',
-                    contributions: 42, // Updated to reflect main repo contributions
+                    contributions: 42,
                     type: 'User'
                 };
 
@@ -109,7 +109,6 @@
                         contributorCard.className = 'team-card';
                         
                         contributorCard.innerHTML = `
-                            <div class="role-badge">Contributor</div>
                             <img src="${contributor.avatar_url}" 
                                  alt="${contributor.login}" 
                                  class="avatar">
@@ -127,7 +126,6 @@
                     });
                 } catch (error) {
                     console.log('Could not fetch additional contributors:', error);
-                    // Don't show error to user since we already have the main contributor
                 }
 
             } catch (error) {
