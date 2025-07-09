@@ -8,112 +8,7 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <meta name="description" content="Download WinGUILite - Choose between PyQt5 and Tkinter editions for your Windows package management needs.">
     <meta name="author" content="JimmyPla6z">
-    <style>
-        /* Previous styles remain the same */
-        .download-section {
-            max-width: 1200px;
-            margin: 4rem auto;
-            padding: 0 2rem;
-        }
-
-        .edition-title {
-            text-align: center;
-            margin: 2rem 0;
-            color: var(--primary-color);
-        }
-
-        .download-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .download-card {
-            background: white;
-            border-radius: 0.5rem;
-            padding: 2rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            transition: transform 0.2s;
-        }
-
-        .download-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .edition-badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            border-radius: 1rem;
-            background-color: var(--primary-color);
-            color: white;
-            font-size: 0.875rem;
-            margin-bottom: 1rem;
-        }
-
-        .version-info {
-            font-size: 0.9rem;
-            color: #666;
-            margin: 1rem 0;
-        }
-
-        .download-button {
-            display: inline-block;
-            background-color: var(--primary-color);
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.375rem;
-            text-decoration: none;
-            font-weight: 600;
-            transition: background-color 0.2s;
-        }
-
-        .download-button:hover {
-            background-color: var(--secondary-color);
-        }
-
-        .system-requirements {
-            background-color: var(--light-bg);
-            padding: 4rem 2rem;
-            margin-top: 4rem;
-        }
-
-        .requirements-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .requirements-container h3 {
-            color: var(--primary-color);
-            margin: 1.5rem 0 1rem;
-        }
-
-        .requirements-container ul {
-            list-style-type: none;
-            padding-left: 1rem;
-        }
-
-        .requirements-container li {
-            margin-bottom: 0.5rem;
-            position: relative;
-        }
-
-        .requirements-container li::before {
-            content: "•";
-            color: var(--primary-color);
-            font-weight: bold;
-            position: absolute;
-            left: -1rem;
-        }
-
-        .last-updated {
-            text-align: center;
-            font-size: 0.875rem;
-            color: #666;
-            margin-top: 2rem;
-        }
-    </style>
+    <meta name="last-updated" content="2025-07-09 14:46:42">
 </head>
 <body>
     <nav class="nav">
@@ -126,7 +21,8 @@
         </div>
     </nav>
 
-    <section class="download-section">
+    <!-- Main Download Section -->
+    <section id="main-download" class="download-section">
         <h1>Download WinGUILite</h1>
         <p>Choose your preferred edition and version.</p>
 
@@ -142,7 +38,8 @@
                     <p>Updated: 2025-07-09</p>
                 </div>
                 <a href="https://github.com/WinGUILite/WinGUILite/releases/latest/download/WinGUI-Lite-PyQt5.exe" 
-                   class="download-button">Download PyQt5 Edition</a>
+                   class="download-button"
+                   onclick="handleDownload('pyqt5')">Download PyQt5 Edition</a>
             </div>
         </div>
 
@@ -158,39 +55,118 @@
                     <p>Updated: 2025-07-09</p>
                 </div>
                 <a href="https://github.com/WinGUILite/WinGUILite/releases/latest/download/WinGUI-Lite-Tkinter.exe" 
-                   class="download-button">Download Tkinter Edition</a>
+                   class="download-button"
+                   onclick="handleDownload('tkinter')">Download Tkinter Edition</a>
             </div>
         </div>
     </section>
 
-    <section class="system-requirements">
-        <div class="requirements-container">
-            <h2>System Requirements</h2>
-            <h3>PyQt5 Edition</h3>
-            <ul>
-                <li>Windows 10 or later</li>
-                <li>Microsoft WinGet package manager installed</li>
-                <li>Python 3.8 or later</li>
-                <li>PyQt5</li>
-                <li>500 MB free disk space</li>
-                <li>2 GB RAM (4 GB recommended)</li>
-            </ul>
-
-            <h3>Tkinter Edition</h3>
-            <ul>
-                <li>Windows 10 or later</li>
-                <li>Microsoft WinGet package manager installed</li>
-                <li>Python 3.8 or later</li>
-                <li>Tkinter (included with Python)</li>
-                <li>400 MB free disk space</li>
-                <li>1 GB RAM (2 GB recommended)</li>
-            </ul>
+    <!-- Thank You Section -->
+    <section id="thank-you" class="download-section thank-you-section" style="display: none;">
+        <div class="thank-you-card">
+            <div class="thank-you-content">
+                <h2>Thank you for downloading WinGUILite!</h2>
+                <p>Your download should start automatically.</p>
+                <div class="download-status">
+                    <p>Download not starting? Click the appropriate link below:</p>
+                    <div class="manual-download-links">
+                        <div id="pyqt5-link" style="display: none;">
+                            <p><strong>PyQt5 Edition:</strong></p>
+                            <div class="manual-link">
+                                https://github.com/WinGUILite/WinGUILite/releases/latest/download/WinGUI-Lite-PyQt5.exe
+                                <button class="copy-button" onclick="copyToClipboard('https://github.com/WinGUILite/WinGUILite/releases/latest/download/WinGUI-Lite-PyQt5.exe')">Copy</button>
+                            </div>
+                        </div>
+                        <div id="tkinter-link" style="display: none;">
+                            <p><strong>Tkinter Edition:</strong></p>
+                            <div class="manual-link">
+                                https://github.com/WinGUILite/WinGUILite/releases/latest/download/WinGUI-Lite-Tkinter.exe
+                                <button class="copy-button" onclick="copyToClipboard('https://github.com/WinGUILite/WinGUILite/releases/latest/download/WinGUI-Lite-Tkinter.exe')">Copy</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="troubleshooting">
+                        <h4>Troubleshooting Steps:</h4>
+                        <ul>
+                            <li>Right-click the link above and select "Save link as..."</li>
+                            <li>Try using a different browser</li>
+                            <li>Disable any download blocking extensions</li>
+                            <li>Check your internet connection</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="next-steps">
+                    <h3>Next Steps</h3>
+                    <ul>
+                        <li>Run the installer once downloaded</li>
+                        <li>Follow the installation instructions</li>
+                        <li>Start using WinGUILite!</li>
+                    </ul>
+                    <a href="download.html" class="back-button">Back to Downloads</a>
+                </div>
+            </div>
         </div>
-        <p class="last-updated">Last updated: 2025-07-09 14:34:44 UTC</p>
     </section>
+
+    <script>
+        function handleDownload(edition) {
+            // Set the hash and show thank you page after a short delay
+            setTimeout(() => {
+                window.location.hash = 'thank-you';
+                showThankYou(edition);
+            }, 500);
+        }
+
+        function showThankYou(edition) {
+            // Hide main download section
+            document.getElementById('main-download').style.display = 'none';
+            
+            // Show thank you section
+            const thankYouSection = document.getElementById('thank-you');
+            thankYouSection.style.display = 'block';
+            
+            // Show appropriate download link
+            document.getElementById('pyqt5-link').style.display = edition === 'pyqt5' ? 'block' : 'none';
+            document.getElementById('tkinter-link').style.display = edition === 'tkinter' ? 'block' : 'none';
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                const button = event.target;
+                const originalText = button.textContent;
+                button.textContent = 'Copied!';
+                setTimeout(() => {
+                    button.textContent = originalText;
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        }
+
+        // Handle hash changes
+        window.addEventListener('hashchange', () => {
+            const hash = window.location.hash;
+            if (hash === '#thank-you') {
+                document.getElementById('main-download').style.display = 'none';
+                document.getElementById('thank-you').style.display = 'block';
+            } else {
+                document.getElementById('main-download').style.display = 'block';
+                document.getElementById('thank-you').style.display = 'none';
+            }
+        });
+
+        // Check hash on page load
+        window.addEventListener('load', () => {
+            if (window.location.hash === '#thank-you') {
+                document.getElementById('main-download').style.display = 'none';
+                document.getElementById('thank-you').style.display = 'block';
+            }
+        });
+    </script>
 
     <footer>
         <p>Created by <a href="https://github.com/JimmyPla6z">JimmyPla6z</a> | <a href="https://github.com/WinGUILite/WinGUILite">GitHub Repository</a></p>
+        <p class="last-updated">Last updated: 2025-07-09 14:46:42 UTC</p>
     </footer>
 </body>
 </html>
