@@ -81,19 +81,77 @@ body {
     margin: 0 auto 2rem;
 }
 
-.cta-button {
-    display: inline-block;
-    background-color: white;
+/* Download Section */
+.download-section {
+    max-width: 1200px;
+    margin: 4rem auto;
+    padding: 0 2rem;
+}
+
+.edition-title {
+    text-align: center;
+    margin: 2rem 0;
     color: var(--primary-color);
+}
+
+.download-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.download-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.download-card:hover {
+    transform: translateY(-5px);
+}
+
+.edition-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+}
+
+.version-info {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 1rem 0;
+}
+
+/* Buttons */
+.cta-button,
+.download-button {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: white;
     padding: 0.75rem 1.5rem;
     border-radius: 0.375rem;
     text-decoration: none;
     font-weight: 600;
-    transition: transform 0.2s;
+    transition: background-color 0.2s;
 }
 
-.cta-button:hover {
-    transform: translateY(-2px);
+.cta-button {
+    background-color: white;
+    color: var(--primary-color);
+}
+
+.cta-button:hover,
+.download-button:hover {
+    background-color: var(--secondary-color);
+    color: white;
 }
 
 /* Features Section */
@@ -128,6 +186,103 @@ body {
     margin-bottom: 1rem;
 }
 
+/* System Requirements */
+.system-requirements {
+    background-color: var(--light-bg);
+    padding: 4rem 2rem;
+    margin-top: 4rem;
+}
+
+.requirements-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.requirements-container h3 {
+    color: var(--primary-color);
+    margin: 1.5rem 0 1rem;
+}
+
+.requirements-container ul {
+    list-style-type: none;
+    padding-left: 1rem;
+}
+
+.requirements-container li {
+    margin-bottom: 0.5rem;
+    position: relative;
+}
+
+.requirements-container li::before {
+    content: "•";
+    color: var(--primary-color);
+    font-weight: bold;
+    position: absolute;
+    left: -1rem;
+}
+
+/* Download Help */
+.download-help {
+    display: none;
+    background: var(--light-bg);
+    padding: 2rem;
+    border-radius: 0.5rem;
+    margin: 1rem 0;
+}
+
+.download-help.active {
+    display: block;
+}
+
+.manual-link {
+    display: inline-block;
+    word-break: break-all;
+    padding: 1rem;
+    background: white;
+    border-radius: 0.375rem;
+    border: 1px solid var(--primary-color);
+    margin: 1rem 0;
+    font-family: monospace;
+}
+
+.copy-button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    margin-left: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.copy-button:hover {
+    background-color: var(--secondary-color);
+}
+
+.help-text {
+    font-size: 0.875rem;
+    color: #666;
+    margin-top: 0.5rem;
+}
+
+.troubleshooting {
+    margin-top: 2rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 0.375rem;
+}
+
+.troubleshooting h4 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.troubleshooting ul {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+}
+
 /* Footer */
 footer {
     text-align: center;
@@ -143,4 +298,12 @@ footer a {
 
 footer a:hover {
     text-decoration: underline;
+}
+
+/* Utilities */
+.last-updated {
+    text-align: center;
+    font-size: 0.875rem;
+    color: #666;
+    margin-top: 2rem;
 }
