@@ -538,47 +538,131 @@ footer a:hover {
 }
 
 /* Want to Contribute Section */
-.contribute-section {
-    padding: 4rem 2rem;
+/* Want to Contribute Section */
+.want-to-contribute {
+    position: relative;
+    padding: 6rem 2rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    overflow: hidden;
+}
+
+/* Add a subtle pattern overlay */
+.want-to-contribute::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.1) 1%, transparent 1%),
+                      radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.1) 1%, transparent 1%);
+    background-size: 50px 50px;
+    opacity: 0.3;
+}
+
+.want-to-contribute-content {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
     text-align: center;
+}
+
+.want-to-contribute h2 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(120deg, #ffffff 0%, #f0f0f0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.want-to-contribute p {
+    font-size: 1.25rem;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.view-on-github {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
     background-color: white;
-}
-
-.contribute-section h2 {
-    color: #1f2937;
-    font-size: 2rem;
-    margin-bottom: 1rem;
-}
-
-.contribute-section p {
-    color: #6b7280;
-    margin-bottom: 2rem;
-}
-
-.github-button {
-    display: inline-block;
-    background-color: #3b82f6;
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.375rem;
-    text-decoration: none;
+    color: var(--primary-color);
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-size: 1.125rem;
     font-weight: 600;
-    transition: background-color 0.2s;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-.github-button:hover {
-    background-color: #2563eb;
+.view-on-github:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    background-color: #f8f9fa;
 }
 
-/* Footer update */
-footer {
-    background-color: #111827;
-    color: white;
-    padding: 1rem;
-    text-align: center;
+.view-on-github::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%232563eb' d='M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
 }
 
-footer a {
-    color: #3b82f6;
+/* Add a floating animation to background elements */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
 }
-    
+
+.want-to-contribute::after {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+    border-radius: 50%;
+    top: -150px;
+    right: -150px;
+    animation: float 6s ease-in-out infinite;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .want-to-contribute {
+        padding: 4rem 1.5rem;
+    }
+
+    .want-to-contribute h2 {
+        font-size: 2.5rem;
+    }
+
+    .want-to-contribute p {
+        font-size: 1.125rem;
+        padding: 0 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .want-to-contribute h2 {
+        font-size: 2rem;
+    }
+
+    .want-to-contribute p {
+        font-size: 1rem;
+    }
+
+    .view-on-github {
+        padding: 0.875rem 1.5rem;
+        font-size: 1rem;
+    }
+}
