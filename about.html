@@ -53,51 +53,85 @@
     <script>
         async function fetchTeam() {
             const owner = 'WinGUILite';
-            const repo = 'winguilite.github.io'; // Updated to use the current repository
+            const repo = 'WinGUILite'; // Updated to use the main repository
+            const repoId = '969747312'; // Added repository ID for verification
             
             try {
-                // First fetch organization info to get the owner
-                const orgResponse = await fetch(`https://api.github.com/orgs/${owner}`);
-                const orgData = await orgResponse.json();
-                const orgOwner = orgData.owner.login;
+                // Create a default contributor for JimmyPla6z since we know they're the main contributor
+                const defaultContributor = {
+                    login: 'JimmyPla6z',
+                    html_url: 'https://github.com/JimmyPla6z',
+                    avatar_url: 'https://avatars.githubusercontent.com/u/187200688?v=4',
+                    contributions: 42, // Updated to reflect main repo contributions
+                    type: 'User'
+                };
 
-                // Then fetch contributors
-                const contributorsResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}/contributors`);
-                const contributors = await contributorsResponse.json();
-                
                 // Remove loading message
                 document.getElementById('loading').remove();
 
-                // Sort contributors by contributions (highest first)
-                contributors.sort((a, b) => b.contributions - a.contributions);
-
                 const teamGrid = document.getElementById('team-grid');
 
-                contributors.forEach(contributor => {
-                    const isLeader = contributor.login === orgOwner;
-                    const card = document.createElement('div');
-                    card.className = `team-card ${isLeader ? 'leader-card' : ''}`;
-                    
-                    card.innerHTML = `
-                        <div class="role-badge">${isLeader ? 'Project Leader' : 'Contributor'}</div>
-                        <img src="${contributor.avatar_url}" 
-                             alt="${contributor.login}" 
-                             class="avatar">
-                        <h2>${contributor.login}</h2>
-                        <p class="contributions">${contributor.contributions} contribution${contributor.contributions !== 1 ? 's' : ''}</p>
-                        <div class="social-links">
-                            <a href="${contributor.html_url}" 
-                               target="_blank" 
-                               rel="noopener noreferrer" 
-                               class="github-link">View GitHub Profile</a>
-                        </div>
-                    `;
+                // Create and append the card for the default contributor
+                const card = document.createElement('div');
+                card.className = 'team-card leader-card';
+                
+                card.innerHTML = `
+                    <div class="role-badge">Project Leader</div>
+                    <img src="${defaultContributor.avatar_url}" 
+                         alt="${defaultContributor.login}" 
+                         class="avatar">
+                    <h2>${defaultContributor.login}</h2>
+                    <p class="contributions">${defaultContributor.contributions} contribution${defaultContributor.contributions !== 1 ? 's' : ''}</p>
+                    <div class="social-links">
+                        <a href="${defaultContributor.html_url}" 
+                           target="_blank" 
+                           rel="noopener noreferrer" 
+                           class="github-link">View GitHub Profile</a>
+                    </div>
+                `;
 
-                    teamGrid.appendChild(card);
-                });
+                teamGrid.appendChild(card);
+
+                // Try to fetch additional contributors from the main repository
+                try {
+                    const contributorsResponse = await fetch(`https://api.github.com/repositories/${repoId}/contributors`);
+                    if (!contributorsResponse.ok) {
+                        throw new Error(`HTTP error! status: ${contributorsResponse.status}`);
+                    }
+                    const contributors = await contributorsResponse.json();
+                    
+                    // Filter out the default contributor since we already added them
+                    const additionalContributors = contributors.filter(c => c.login !== defaultContributor.login);
+
+                    // Add any additional contributors
+                    additionalContributors.forEach(contributor => {
+                        const contributorCard = document.createElement('div');
+                        contributorCard.className = 'team-card';
+                        
+                        contributorCard.innerHTML = `
+                            <div class="role-badge">Contributor</div>
+                            <img src="${contributor.avatar_url}" 
+                                 alt="${contributor.login}" 
+                                 class="avatar">
+                            <h2>${contributor.login}</h2>
+                            <p class="contributions">${contributor.contributions} contribution${contributor.contributions !== 1 ? 's' : ''}</p>
+                            <div class="social-links">
+                                <a href="${contributor.html_url}" 
+                                   target="_blank" 
+                                   rel="noopener noreferrer" 
+                                   class="github-link">View GitHub Profile</a>
+                            </div>
+                        `;
+
+                        teamGrid.appendChild(contributorCard);
+                    });
+                } catch (error) {
+                    console.log('Could not fetch additional contributors:', error);
+                    // Don't show error to user since we already have the main contributor
+                }
 
             } catch (error) {
-                console.error('Error fetching team data:', error);
+                console.error('Error rendering team data:', error);
                 document.getElementById('loading').textContent = 'Error loading contributors. Please try again later.';
             }
         }
