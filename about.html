@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About WinGUILite - Team and Contributors</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <meta name="description" content="Meet the team behind WinGUILite - A simple package management GUI for Windows">
+    <meta name="author" content="JimmyPla6z">
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">WinGUILite</a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="download.html">Download</a>
+                <a href="about.html" class="active">About</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>About WinGUILite</h1>
+        <p>Meet the amazing team behind WinGUILite</p>
+    </section>
+
+    <section class="team-section">
+        <div id="team-grid" class="team-grid">
+            <!-- Contributors will be dynamically loaded here -->
+            <div id="loading" class="loading">Loading contributors...</div>
+        </div>
+    </section>
+
+    <section class="join-section">
+        <div class="join-container">
+            <h2>Want to Contribute?</h2>
+            <p>We welcome contributions from developers of all skill levels. Help us make WinGUILite even better!</p>
+            <div class="cta-buttons">
+                <a href="https://github.com/WinGUILite/WinGUILite" 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   class="cta-button">View on GitHub</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Created by <a href="https://github.com/JimmyPla6z">JimmyPla6z</a> | <a href="https://github.com/WinGUILite/WinGUILite">GitHub Repository</a></p>
+    </footer>
+
+    <script>
+        async function fetchTeam() {
+            const owner = 'WinGUILite';
+            const repo = 'WinGUILite';
+            
+            try {
+                // First fetch organization info to get the owner
+                const orgResponse = await fetch(`https://api.github.com/orgs/${owner}`);
+                const orgData = await orgResponse.json();
+                const orgOwner = orgData.owner.login;
+
+                // Then fetch contributors
+                const contributorsResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}/contributors`);
+                const contributors = await contributorsResponse.json();
+                
+                // Remove loading message
+                document.getElementById('loading').remove();
+
+                // Sort contributors by contributions (highest first)
+                contributors.sort((a, b) => b.contributions - a.contributions);
+
+                const teamGrid = document.getElementById('team-grid');
+
+                contributors.forEach(contributor => {
+                    const isLeader = contributor.login === orgOwner;
+                    const card = document.createElement('div');
+                    card.className = `team-card ${isLeader ? 'leader-card' : ''}`;
+                    
+                    card.innerHTML = `
+                        <div class="role-badge">${isLeader ? 'Project Leader' : 'Contributor'}</div>
+                        <img src="${contributor.avatar_url}" 
+                             alt="${contributor.login}" 
+                             class="avatar">
+                        <h2>${contributor.login}</h2>
+                        <p class="contributions">${contributor.contributions} contribution${contributor.contributions !== 1 ? 's' : ''}</p>
+                        <div class="social-links">
+                            <a href="${contributor.html_url}" 
+                               target="_blank" 
+                               rel="noopener noreferrer" 
+                               class="github-link">View GitHub Profile</a>
+                        </div>
+                    `;
+
+                    teamGrid.appendChild(card);
+                });
+
+            } catch (error) {
+                console.error('Error fetching team data:', error);
+                document.getElementById('loading').textContent = 'Error loading contributors. Please try again later.';
+            }
+        }
+
+        // Fetch team data when the page loads
+        document.addEventListener('DOMContentLoaded', fetchTeam);
+    </script>
+</body>
+</html>
